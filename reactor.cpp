@@ -1,3 +1,5 @@
+// Copyright 2017 Sean Bollin
+
 #include <sys/epoll.h>
 #include <unistd.h>
 #include <iostream>
@@ -6,8 +8,7 @@
 #include <functional>
 #include <unordered_map>
 #include <string>
-
-// Copyright 2017 Sean Bollin
+#include <utility>
 
 class Epoll {
  public:
@@ -51,8 +52,8 @@ class Reactor {
         epoll.control();
     }
 
-    void addHandler(const std::string& event, std::function<void()> callback) {
-        handlers.insert({event, callback});  // TODO(seanbo): emplace
+    void addHandler(std::string event, std::function<void()> callback) {
+        handlers.emplace(std::move(event), std::move(callback));
     }
 
     void run() {
