@@ -26,7 +26,6 @@ class Epoll {
         return epoll_ctl(fileDescriptor, EPOLL_CTL_ADD, STDIN_FILENO, &event);
     }
 
-
     int wait() {
         return epoll_wait(
                 fileDescriptor,
